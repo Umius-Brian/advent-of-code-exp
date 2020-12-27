@@ -1,5 +1,10 @@
 import input from '../input.js';
 
+/**
+ * Given a series of claims, there exists one that does not overlap with
+ * the others. Return its claim ID.
+ */
+
 const isolateClaim = claims => {
   const claimsArray = claims.split('\n');
 
@@ -20,34 +25,46 @@ const isolateClaim = claims => {
     }
   }
 
+  // Create a set to hold any claims
   const isolatedClaim = new Set();
 
+  // optimize
+  // fill claims in matrix with its ID and check to see if it overlaps with other claims
   for (let key in store) {
     const { topLeftCoordinate, boxSize } = store[key];
 
-    let top = topLeftCoordinate[1];
-    let right = topLeftCoordinate[0] + boxSize[0];
-    let bottom = topLeftCoordinate[1] + boxSize[1];
-    let left = topLeftCoordinate[0];
+    const top = topLeftCoordinate[1];
+    const right = topLeftCoordinate[0] + boxSize[0];
+    const bottom = topLeftCoordinate[1] + boxSize[1];
+    const left = topLeftCoordinate[0];
     let overlap = false;
 
     for (let i = top; i < bottom; i++) {
       for (let j = left; j < right; j++) {
-        const overlappingClaims = matrix[i][j];
-        if (!overlappingClaims) {
+
+        // keep track of overlapped claim ID
+        const overlappedClaims = matrix[i][j];
+
+        // if matrix index has not been claimed, claim it with respective ID
+        if (!overlappedClaims) {
           matrix[i][j] = key;
         } else {
+
+          // otherwise, indicate that an overlap has occurred and add it to set
+          // remove any previously isolated claims if it has been subsequently overlapped
           overlap = true;
-          if (isolatedClaim.has(overlappingClaims)) {
-            isolatedClaim.delete(overlappingClaims);
+          if (isolatedClaim.has(overlappedClaims)) {
+            isolatedClaim.delete(overlappedClaims);
           }
         }
       }
     }
+    // if there hasn't been an overlap, add it to set
     if (!overlap) {
       isolatedClaim.add(key);
     }
   }
+  
   return isolatedClaim;
 }
 

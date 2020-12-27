@@ -1,10 +1,10 @@
 import input from '../input.js';
 
 /**
- * Given a series of strings, for each string check the number of times
- * a letter is repeated twice or thrice. Multiply these occurrences and return
- * the result. If the number of occurrences a letter is repeated twice or thrice
- * is more than one in a given string, only count it once.
+ * Given a series of box IDs, for each box ID check the number of times
+ * a letter is repeated once or twice. Multiply these occurrences and return
+ * the result. If the number of occurrences a letter is repeated once or twice
+ * is more than one in a given box ID, only count it once.
  */
 
 const checkSum = boxes => {
