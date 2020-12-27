@@ -1,4 +1,4 @@
-import input from './input.js'
+import input from '../input.js';
 
 /**
  * If given a series of frequency changes, then starting from a 
@@ -6,12 +6,12 @@ import input from './input.js'
  * resulting frequency.
  */
 
-function frequencyDevice(changes) {
+const sumOfFrequencies = frequencyChanges => {
   // convert multi-line string param into an integer-filled array
-  const arr = changes.split('\n').map(item => +item);
+  const arr = frequencyChanges.split('\n').map(item => +item);
 
   // sum array values to obtain resulting frequency value
   return arr.reduce((acc, cv) => acc + cv);
 }
 
-frequencyDevice(input)
+console.log(sumOfFrequencies(input));
