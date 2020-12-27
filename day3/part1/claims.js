@@ -1,4 +1,4 @@
-import input from './input.js';
+import input from '../input.js';
 
 const overlapClaims = claims => {
   const claimsArray = claims.split('\n');
