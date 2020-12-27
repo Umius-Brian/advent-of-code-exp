@@ -12,13 +12,13 @@ const isolateClaim = claims => {
   const store = {};
 
   for (let i = 0; i < claimsArray.length; i++) {
-    let topLeftX = +claimsArray[i].slice(claimsArray[i].indexOf('@ ') + 1, claimsArray[i].indexOf(','));
-    let topLeftY = +claimsArray[i].slice(claimsArray[i].indexOf(',') + 1, claimsArray[i].indexOf(':'));
-    let boxWidth = +claimsArray[i].slice(claimsArray[i].indexOf(': ') + 1, claimsArray[i].indexOf('x'));
-    let boxHeight = +claimsArray[i].slice(claimsArray[i].indexOf('x') + 1)
+    const topLeftX = +claimsArray[i].slice(claimsArray[i].indexOf('@ ') + 1, claimsArray[i].indexOf(','));
+    const topLeftY = +claimsArray[i].slice(claimsArray[i].indexOf(',') + 1, claimsArray[i].indexOf(':'));
+    const boxWidth = +claimsArray[i].slice(claimsArray[i].indexOf(': ') + 1, claimsArray[i].indexOf('x'));
+    const boxHeight = +claimsArray[i].slice(claimsArray[i].indexOf('x') + 1)
 
-    let topLeftCoordinate = [topLeftX, topLeftY];
-    let boxSize = [boxWidth, boxHeight];
+    const topLeftCoordinate = [topLeftX, topLeftY];
+    const boxSize = [boxWidth, boxHeight];
 
     if (!store[claimsArray[i]]) {
       store[i] = {topLeftCoordinate, boxSize};
@@ -64,8 +64,8 @@ const isolateClaim = claims => {
       isolatedClaim.add(key);
     }
   }
-  
+
   return isolatedClaim;
 }
 
-console.log(isolateClaim(input))
+isolateClaim(input);
