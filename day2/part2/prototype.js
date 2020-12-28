@@ -5,7 +5,7 @@ import input from '../input.js'
  * differ by a single character.
  */
 
-function prototypeFabric(boxes) {
+const prototypeFabric = boxes => {
   const boxesArray = boxes.split('\n');
 
   // need to optimize
@@ -36,4 +36,4 @@ function prototypeFabric(boxes) {
   return undefined;
 }
 
-prototypeFabric(input);
+console.log(prototypeFabric(input));
