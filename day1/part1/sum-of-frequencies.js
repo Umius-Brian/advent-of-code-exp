@@ -14,4 +14,4 @@ const sumOfFrequencies = frequencyChanges => {
   return arr.reduce((acc, cv) => acc + cv);
 }
 
-console.log(sumOfFrequencies(input));
+sumOfFrequencies(input);

@@ -1,4 +1,97 @@
-progressive web app
-static vs serverside app
-how to optimize fetching / server side app
-two-way binding vs one-way binding
+// Progressive Web App
+
+- Utilize Lighthouse to audit website
+- Should be served over HTTPS
+- Pages are responsive on tablets and mobile devices
+- All app URLs load while offline (Service Worker)
+- Metadata provided for Add to Home Screen (Web App Manifest file)
+- First load fast even on 3g (Pagespeed Insights, SpeedIndex on WebPageTest, <script async>, mark rendering blocking CSS, 
+  PRPL pattern, PageSpeed Module on server)
+- X-browser accessibility
+- Page transitions don’t feel like they block the network (transition user to next page immediately and show a skeleton 
+  screen and use content already available while content loads
+- Each page has a URL (make sure client-side router can reconstruct app state from a given URL)
+- Site content is indexed by Google
+- Schema.org medadata is provided where appropriate to improve appearances in search engines (markup content)
+- Social metadata provided
+- Canonical URLs are provided when necessary (canonical link tag at <head> of every page pointing to canonical source document)
+- Pages use History API (instead of page fragments)
+- Content doesn’t jump as page loads
+- Pressing back from a detail page retains scroll position on the previous list page
+- When tapped, inputs aren’t obscured by the on screen keyboard (Element.scrollWindow() and Element.scrollIntoViewIfNeeded() 
+  to ensure input is visible when tapped)
+- Content is easily shareable from standalone or fullscreen
+- Site is responsive across phone, tablet and desktop screen sizes
+- Any app install prompts are not used excessively (check that PWA doesn’t use an app install button)
+- The Add to Home Screen prompt is intercepted (intercept beforeinstallprompt event and prompt later)
+
+
+// Static vs Server Side Rendering
+
+Client Rendered Apps
+	- React, Angular, Backbone, Vue
+	- Server sends static HTML and JS to client
+	- Pros: lower server load(can host on any CDN or static file host like S3), no full page reload required, fast render after initial load, faster navigation
+	- Cons: poor SEO, slower load times on older devices (CPU bound), typically loads slower than static or server side rendered apps
+
+Static Site Generators
+	- Gatsby, VuePress, Next.js, Hugo
+	- Creates HTML pages from templates or components and a given content source at build time; content does not change until rebuild
+	- Server makes API calls and generates static files for every page, so when a request arrives, it only needs to return pre-rendered HTML files
+	- Pros: loads quicker than client/server renders, cheap deployment and hosting to static CDN or S3, security, version control, fast First Paint / First Contentful Paint / Time To Interactive / Time To First Byte
+	- Cons: maintainability if content frequently requires updating (stale content), build time increases in relation to size of app (more difficult to scale)
+
+Server Rendered Apps
+	- Next.js, Nuxt.js / Vue (isomorphic), Universal / Angular
+	- Content is fetched from the server to the client, necessary API calls are made beforehand in initial request
+	- Complex apps that require user interaction, reliance on DB, frequent content changes, tailored content, storing of user data, attending to SEO
+	- Pros: real-time fetching, quicker loads (even on less performant devices), less bearing on loading times, good SEO, fast FP / FCP / TTT
+	- Cons: more API calls to the server (expensive compute overhead costs), cannot be deployed to CDN, slower TTFB
+
+Dynamic Rendering
+	- Server side rendering on initial load, then client side routing on subsequent requests
+	- Pros: cheaper and easier to implement than SSR, solves SEO, solves partial indexing issues
+
+
+// Optimizations
+
+JavaScript minification and module building
+	- WebAssembly, Webpack
+	- Remove all unnecessary characters without changing functionality to improve source-code parsing
+	- Bundling scripts into a single file, resulting in fewer HTTP requests and less parsing
+
+Caching
+	- Websites are cached to CDNs to be served to end user much faster and reduce load on backend servers
+	- Caching can be implemented on the client (browser storage), between client and server (CDNs), or on the server itself, even on hardware (CPU) level
+	- Cache at bottlenecks to prevent single points of failure
+
+Profiling
+	- Identify application hotspots instead of blindly optimizing
+	- Network view, timeline view, Dev Tools
+	- Memory optimization	(prevent leaks)
+
+Load Balancing
+	- NGINX, Cloudflare, CloudFront
+	- Dynamic and static content should be split for easy concurrent access
+
+Other methods
+	- Lazy loading
+	- Array-IDs in DOM manipulation libraries to reuse existing nodes
+	- DB optimization with indexing: DB creates fast-access data structures that internally map to keys to improve associated data retrieval
+	- Avoid render blocking JS and CSS (media queries with stylesheet prioritization, no essential scripts are asynced)
+	- Service workers to cache certain data while fetching what is missing
+	- Image optimization
+
+
+// Two-way vs One-way Binding
+
+Two Way
+	- Angular, Vue (v-model, one way under the hood)
+	- Binds data from model to view and view to model
+	- Any changes to UI field updates the model, and vice versa
+
+One Way
+	- React (through reconciliation), Vue
+	- Binds data from model to view
+	- Model is single source of truth
+	- HTML cannot change components, only raise events that components respond to
